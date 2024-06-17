@@ -1,1 +1,1 @@
-# learn_openGL
+# learning openGL
