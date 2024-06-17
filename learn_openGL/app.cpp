@@ -5,7 +5,7 @@ const char* vertex_shader_source =
 "#version 460 core\n"
 "layout (location = 0) in vec3 a_pos;\n"
 "layout (location = 1) in vec3 a_color;\n"
-"out vec4 vertex_color;\n"
+"out vec3 vertex_color;\n"
 "void main() {\n"
 "gl_Position = vec4(a_pos.x, a_pos.y, a_pos.z, 1.0);\n"
 "vertex_color = a_color;\n"
@@ -14,9 +14,9 @@ const char* vertex_shader_source =
 const char* fragment_shader_source =
 "#version 460 core\n"
 "out vec4 frag_color;\n"
-"in vec4 vertex_color;\n"
+"in vec3 vertex_color;\n"
 "void main() {\n"
-"frag_color = vec4(vertex_color, 1.0;\n"
+"frag_color = vec4(vertex_color, 1.0);\n"
 "}\n";
 
 float vertices[] = {
@@ -89,8 +89,8 @@ void loglr::app::run() {
 	GLuint VBO;
 	glGenBuffers(1, &VBO);
 
-	GLuint EBO;
-	glGenBuffers(1, &EBO);
+	/*GLuint EBO;
+	glGenBuffers(1, &EBO);*/
 
 	// Bind the vertex array to save all subsequent vertex information, including the EBO
 	glBindVertexArray(VAO);
@@ -104,9 +104,10 @@ void loglr::app::run() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
 	
 	// This configures the currently bound vbo to GL_ARRAY_BUFFER, specifies what attributes are in the VBO
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);						// location
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));		// color
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	while (!window.should_close()) {
 		glfwPollEvents();
@@ -132,7 +133,7 @@ void loglr::app::run() {
 	}
 
 	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &EBO);
+	/*glDeleteBuffers(1, &EBO);*/
 	glDeleteBuffers(1, &VBO);
 	glDeleteProgram(shader_program);
 }
