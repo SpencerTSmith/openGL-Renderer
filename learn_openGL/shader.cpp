@@ -8,8 +8,8 @@
 loglr::shader::shader(const std::string& vertex_path, const std::string& fragment_path) {
 	std::string vertex_source = read_source(vertex_path);
 	std::string fragment_source = read_source(fragment_path);
-	const char* vert_cstr = vertex_source.c_str();
-	const char* frag_cstr = fragment_source.c_str();
+	const GLchar* vert_cstr = vertex_source.c_str();
+	const GLchar* frag_cstr = fragment_source.c_str();
 
 	if (vertex_source.empty() || fragment_source.empty()) {
 		std::cout << "ERROR::SHADER::FILE(S)_NOT_SUCCESSFULLY_READ" << std::endl;
@@ -47,7 +47,6 @@ std::string loglr::shader::read_source(const std::string& path) {
 
 	if (!file.is_open()) {
 		std::cout << "ERROR::SHADER::FILE(S)_NOT_OPENED" << std::endl;
-		return NULL;
 	}
 
 	std::string line;
@@ -79,15 +78,15 @@ void loglr::shader::check_comp_link_errors(GLuint to_check, check_type type) {
 	}
 }
 
-void loglr::shader::set_bool(const std::string& name, bool value) const
+void loglr::shader::set_bool(const std::string& name, GLboolean value) const
 {
-	glUniform1i(glGetUniformLocation(handle, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(handle, name.c_str()), (GLint)value);
 }
-void loglr::shader::set_int(const std::string& name, int value) const
+void loglr::shader::set_int(const std::string& name, GLint value) const
 {
 	glUniform1i(glGetUniformLocation(handle, name.c_str()), value);
 }
-void loglr::shader::set_float(const std::string& name, float value) const
+void loglr::shader::set_float(const std::string& name, GLfloat value) const
 {
 	glUniform1f(glGetUniformLocation(handle, name.c_str()), value);
 }

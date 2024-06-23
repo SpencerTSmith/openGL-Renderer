@@ -138,11 +138,13 @@
     <ClCompile Include="loglr_window.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="utilities\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="loglr_window.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="utilities\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\first.frag" />
