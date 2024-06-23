@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "shader.h"
+#include "texture.h"
 #include "utilities/stb_image.h"
 
 GLfloat vertices[] = {
@@ -44,31 +45,8 @@ void loglr::app::run() {
 	
 	loglr::shader shader("shaders/first.vert", "shaders/first.frag");
 
-	stbi_set_flip_vertically_on_load(true);
-	int32_t width, height, num_channels;
-	GLubyte* tex_data = stbi_load("resources/container.jpg", &width, &height, &num_channels, 0);
-	if (!tex_data) {
-		std::cout << "Failed to load texture data" << std::endl;
-	}
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex_data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	stbi_image_free(tex_data);
-
-	GLubyte* happy_data = stbi_load("resources/awesomeface.png", &width, &height, &num_channels, 0);
-	if (!happy_data) {
-		std::cout << "Failed to load texture data" << std::endl;
-	}
-	GLuint happy;
-	glGenTextures(1, &happy);
-	glBindTexture(GL_TEXTURE_2D, happy);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, happy_data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	stbi_image_free(happy_data);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
+	loglr::texture container_tex("resources/container.jpg", GL_RGB);
+	loglr::texture happy_tex("resources/awesomeface.png", GL_RGBA);
 
 	// Generate a vertex array, stores all attribute stuff and the vertex buffer
 	GLuint VAO;
@@ -114,9 +92,9 @@ void loglr::app::run() {
 
 		// Use our texture
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glBindTexture(GL_TEXTURE_2D, container_tex.id());
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, happy);
+		glBindTexture(GL_TEXTURE_2D, happy_tex.id());
 
 		// Use the vertex array
 		glBindVertexArray(VAO);
