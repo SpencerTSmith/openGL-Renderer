@@ -2,9 +2,15 @@
 
 #include <iostream>
 
+#include "utilities/stb_image.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "shader.h"
 #include "texture.h"
-#include "utilities/stb_image.h"
+
+
 
 GLfloat vertices[] = {
 	// positions         // colors
@@ -31,6 +37,8 @@ GLuint rect_indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
+
+GLfloat mixer = 0.1f;
 
 loglr::app::app(std::string name)
 	: name{ name }, window{ width, height, name } {
@@ -78,7 +86,8 @@ void loglr::app::run() {
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	// Use the shader
+
+	// Set up our texture sampler uniforms
 	shader.use();
 	shader.set_int("texture1", 0);
 	shader.set_int("texture2", 1);
@@ -92,14 +101,21 @@ void loglr::app::run() {
 
 		// Use our texture
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, container_tex.id());
+		container_tex.bind();
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, happy_tex.id());
+		happy_tex.bind();
+
+		shader.set_float("mix_percent", mixer);
+
+
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		transform = glm::rotate(transform, (GLfloat)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.5f));
+		shader.set_mat4("transform", transform);
 
 		// Use the vertex array
 		glBindVertexArray(VAO);
-		// Draw array using triangle primitive
-		/*glDrawArrays(GL_TRIANGLES, 0, 3);*/
 
 		// Draw elements using vao and ebo
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -117,4 +133,8 @@ void loglr::app::process_input()
 {
 	if (glfwGetKey(window.handle(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window.handle(), true);
+	if (glfwGetKey(window.handle(), GLFW_KEY_UP) == GLFW_PRESS) 
+		mixer = mixer >= 1.0f ? 1.0f : mixer + 0.001f;
+	if (glfwGetKey(window.handle(), GLFW_KEY_DOWN) == GLFW_PRESS)
+		mixer = mixer <= 0.0f ? 0.0f : mixer - 0.001f;
 }

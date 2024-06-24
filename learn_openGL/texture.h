@@ -6,17 +6,18 @@ namespace loglr {
 
 class texture {
 
-public: // interface
+public:		// interface
 	texture(const std::string& texture_path, GLuint pixel_format);
 
 	GLuint id() { return handle; }
 
+	void bind();
 
 	texture() = delete;
 	texture(const texture&) = delete;
 	texture& operator=(const texture&) = delete;
 
-private:
+private:	// members
 	GLuint handle;
 
 };

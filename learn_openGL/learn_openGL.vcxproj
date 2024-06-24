@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="lessons\lessons.h" />
     <ClInclude Include="loglr_window.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="utilities\stb_image.h" />

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <glm/gtc/type_ptr.hpp>
 
 loglr::shader::shader(const std::string& vertex_path, const std::string& fragment_path) {
 	std::string vertex_source = read_source(vertex_path);
@@ -78,15 +79,16 @@ void loglr::shader::check_comp_link_errors(GLuint to_check, check_type type) {
 	}
 }
 
-void loglr::shader::set_bool(const std::string& name, GLboolean value) const
-{
+void loglr::shader::set_bool(const std::string& name, GLboolean value) const {
 	glUniform1i(glGetUniformLocation(handle, name.c_str()), (GLint)value);
 }
-void loglr::shader::set_int(const std::string& name, GLint value) const
-{
+void loglr::shader::set_int(const std::string& name, GLint value) const {
 	glUniform1i(glGetUniformLocation(handle, name.c_str()), value);
 }
-void loglr::shader::set_float(const std::string& name, GLfloat value) const
-{
+void loglr::shader::set_float(const std::string& name, GLfloat value) const {
 	glUniform1f(glGetUniformLocation(handle, name.c_str()), value);
+}
+
+void loglr::shader::set_mat4(const std::string& name, const glm::mat4& mat) {
+	glUniformMatrix4fv(glGetUniformLocation(handle, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 }

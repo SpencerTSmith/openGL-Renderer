@@ -1,7 +1,9 @@
 #ifndef SHADER_H
 #define SHADER_H
 #pragma once
+
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 #include <string>
 
@@ -15,9 +17,11 @@ public: // interface
 	void use();
 
 	GLuint id() { return handle; }
+
 	void set_bool(const std::string& name, GLboolean value) const;
 	void set_int(const std::string& name, GLint value) const;
 	void set_float(const std::string& name, GLfloat value) const;
+	void set_mat4(const std::string& name, const glm::mat4& mat);
 	
 	shader() = delete;
 	shader(const shader&) = delete;

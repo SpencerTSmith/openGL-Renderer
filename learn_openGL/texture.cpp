@@ -17,6 +17,12 @@ loglr::texture::texture(const std::string& texture_path, GLuint pixel_format) {
 	glBindTexture(GL_TEXTURE_2D, handle);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, pixel_format, GL_UNSIGNED_BYTE, tex_data);
 	glGenerateMipmap(GL_TEXTURE_2D);
+
+	// Clean up
 	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(tex_data);
+}
+
+void loglr::texture::bind() {
+	glBindTexture(GL_TEXTURE_2D, handle);
 }
