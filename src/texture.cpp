@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-#include "utilities/stb_image.h"
-
+#include <stb/stb_image.h>
 
 loglr::texture::texture(const std::string& texture_path, GLuint pixel_format) {
 	stbi_set_flip_vertically_on_load(true);

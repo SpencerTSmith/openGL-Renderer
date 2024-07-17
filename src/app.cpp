@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "utilities/stb_image.h"
+#include <stb/stb_image.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -46,12 +46,12 @@ loglr::app::app(std::string name)
 }
 
 void loglr::app::run() {
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+	if (glewInit() != GLEW_OK) {
 		std::cout << "Failed to initialize glad" << std::endl;
 		return;
 	}
 	
-	loglr::shader shader("shaders/first.vert", "shaders/first.frag");
+	loglr::shader shader("src/shaders/first.vert", "src/shaders/first.frag");
 
 	loglr::texture container_tex("resources/container.jpg", GL_RGB);
 	loglr::texture happy_tex("resources/awesomeface.png", GL_RGBA);
