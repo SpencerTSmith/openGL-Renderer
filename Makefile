@@ -4,4 +4,3 @@ run:
 	./renderer
 clean:
 	rm renderer
-	

@@ -2,7 +2,7 @@
 #define APP_H
 #pragma once
 
-#include "loglr_window.h"
+#include "window.h"
 
 namespace loglr{
 

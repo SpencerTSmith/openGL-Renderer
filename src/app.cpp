@@ -10,22 +10,20 @@
 #include "shader.h"
 #include "texture.h"
 
-
-
-GLfloat vertices[] = {
+const GLfloat vertices[] = {
 	// positions         // colors
 	 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
 	-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
 	 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 };
 
-GLfloat tex_coords[] = {
+const GLfloat tex_coords[] = {
 	0.0f, 0.0f,
 	1.0f, 0.0f,
 	0.5f, 1.0f
 };
 
-GLfloat rect_verts[] = {
+const GLfloat rect_verts[] = {
 	// positions          // colors           // texture coords
 	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
 	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
@@ -33,12 +31,12 @@ GLfloat rect_verts[] = {
 	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 };
 
-GLuint rect_indices[] = {
+const GLuint rect_indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
 
-GLfloat mixer = 0.1f;
+const GLfloat mixer = 0.1f;
 
 loglr::app::app(std::string name)
 	: name{ name }, window{ width, height, name } {

@@ -1,4 +1,4 @@
-#include "loglr_window.h"
+#include "window.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
